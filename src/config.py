@@ -4,7 +4,7 @@ from os.path import join
 
 class Config:
     def __init__(self):
-        self.window_title = "Maze game"
+        self.window_title = "Maja's maze game"
 
         self.fps = 90
 

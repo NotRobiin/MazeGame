@@ -12,7 +12,8 @@ class Game:
         pygame.display.set_caption(self.cfg.window_title)
 
         bs = self.cfg.block_size
-        size = (bs * len(self.cfg.maze[0]), bs * len(self.cfg.maze))
+        maze = self.cfg.maze
+        size = (bs * len(maze[0]), bs * len(maze))
 
         self.window = pygame.display.set_mode(size)
         self.clock = pygame.time.Clock()
@@ -22,7 +23,8 @@ class Game:
         self.level.draw(self.window)
 
     def event(self, e) -> None:
-        print(f"Event: {e}")
+        if e.type == pygame.QUIT:
+            self.quit()
 
     def loop(self) -> None:
         while True:
@@ -33,3 +35,7 @@ class Game:
 
             self.draw()
             pygame.display.update()
+
+    def quit(self):
+        pygame.quit()
+        quit()

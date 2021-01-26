@@ -27,8 +27,9 @@ class Level:
         if field in self.cfg.assets["blocks"].keys():
             image = self.cfg.assets["blocks"][field]
             surface.blit(image, (x, y))
-    
+
     def draw_text(self, surface, field, x, y):
+        # Prepare font and render obj
         font = self.cfg.font[field]
         text = pygame.font.SysFont(font["name"], font["size"])
         source = text.render(font["text"], True, font["color"])
@@ -37,5 +38,4 @@ class Level:
         bs = self.cfg.block_size / 2
         rect = source.get_rect(center=(x + bs, y + bs))
 
-        # Finally draw the text
         surface.blit(source, rect)
