@@ -1,5 +1,5 @@
 import pygame
-from level import Level
+from src.level import Level
 
 
 class MainMenu:
