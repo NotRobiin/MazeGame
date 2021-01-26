@@ -24,6 +24,25 @@ class Config:
             "xxxxxxexx",
         ]
 
+        self.buttons = {
+            "main": {
+                "start": (33, 220, 207, 290),
+                "highscore": (33, 336, 207, 409),
+                "exit": (33, 449, 207, 522),
+            },
+            "character": {"girl": (23, 196, 326, 263), "boy": (24, 414, 330, 480),},
+            "level": {
+                "1": {
+                    "image": load(join("assets/menu", "level1preview.png")),
+                    "pos": (50, 150, 347, 330),
+                },
+                "2": {
+                    "image": load(join("assets/menu", "level1preview.png")),
+                    "pos": (367, 350, 564, 540),
+                },
+            },
+        }
+
         self.font = {
             "s": {
                 "size": 30,
@@ -44,5 +63,14 @@ class Config:
                 "d": load(join("assets/blocks", "dirtblock.png")),
                 "r": load(join("assets/blocks", "rockpile64.png")),
                 "x": load(join("assets/blocks", "lightblue.png")),
-            }
+            },
+            "player": {
+                "girl": load(join("assets/player", "girl.png")),
+                "boy": load(join("assets/player", "boy.png")),
+            },
+            "main_menu": {"background": load(join("assets/menu", "Menuscreen.jpg"))},
+            "character": {
+                "background": load(join("assets/menu", "characterselect.png"))
+            },
+            "level": {"background": load(join("assets/menu", "levelselect.jpg")),},
         }

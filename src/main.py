@@ -1,16 +1,13 @@
 from config import Config
 from game import Game
-from level import Level
+from menu import MainMenu
 
 
 def main() -> None:
     # Make all requirements
     cfg = Config()
     game = Game(cfg)
-    lvl = Level(cfg)
-
-    # Setup all requirements
-    game.setup(lvl)
+    menu = MainMenu(game,cfg)
 
     # Start the game
     game.loop()

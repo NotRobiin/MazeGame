@@ -5,6 +5,27 @@ class Level:
     def __init__(self, config):
         self.cfg = config
 
+    def get_starting_pos(self) -> tuple:
+        for y in range(len(self.cfg.maze)):
+            for x in range(len(self.cfg.maze[y])):
+                field = self.cfg.maze[y][x]
+
+                if field == "s":
+                    bs = self.cfg.block_size
+                    pos = (x * bs, y * bs)
+
+                    return pos
+
+    def get_block(self, x: int, y: int) -> str:
+        bs = self.cfg.block_size
+        j, i = int(y / bs), int(x / bs)
+
+        # Outside the map, just mark it as a wall
+        if j >= len(self.cfg.maze[0]) or i >= len(self.cfg.maze):
+            return "x"
+
+        return self.cfg.maze[j][i]
+
     def draw(self, surface) -> None:
         # Draw background
         surface.fill(self.cfg.bg_color)

@@ -1,4 +1,5 @@
 import pygame
+from player import Player
 
 
 class Game:
@@ -6,8 +7,10 @@ class Game:
         self.cfg = cfg
         self.window = None
         self.level = None
+        self.player = Player(self.cfg, self)
+        self.in_menu = False
+        self.menu = None
 
-    def setup(self, lvl) -> None:
         pygame.init()
         pygame.display.set_caption(self.cfg.window_title)
 
@@ -17,14 +20,27 @@ class Game:
 
         self.window = pygame.display.set_mode(size)
         self.clock = pygame.time.Clock()
-        self.level = lvl
+
+    def set_menu(self, menu):
+        self.in_menu = True if menu is not None else None
+        self.menu = menu
 
     def draw(self) -> None:
-        self.level.draw(self.window)
+        if self.in_menu:
+            self.menu.draw(self.window)
+        else:
+            self.level.draw(self.window)
+            self.player.draw(self.window)
 
     def event(self, e) -> None:
         if e.type == pygame.QUIT:
             self.quit()
+
+        if self.in_menu:
+            self.menu.event(e)
+
+        elif e.type == pygame.KEYDOWN:
+            self.player.move(e.key)
 
     def loop(self) -> None:
         while True:
@@ -34,6 +50,7 @@ class Game:
                 self.event(e)
 
             self.draw()
+
             pygame.display.update()
 
     def quit(self):
