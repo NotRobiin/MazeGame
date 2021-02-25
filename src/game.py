@@ -1,5 +1,6 @@
 import pygame
 from src.player import Player
+from src.popup import Popup
 
 
 class Game:
@@ -10,6 +11,7 @@ class Game:
         self.player = Player(self.cfg, self)
         self.in_menu = False
         self.menu = None
+        self.is_popup_open = False
 
         pygame.init()
         pygame.display.set_caption(self.cfg.window_title)
@@ -25,12 +27,24 @@ class Game:
         self.in_menu = True if menu is not None else None
         self.menu = menu
 
+    def set_popup(self, status, **options):
+        self.is_popup_open = status
+
+        if status:
+            self.popup = Popup(**options)
+        else:
+            self.popup = None
+
     def draw(self) -> None:
         if self.in_menu:
             self.menu.draw(self.window)
+
         else:
             self.level.draw(self.window)
             self.player.draw(self.window)
+
+        if self.is_popup_open:
+            self.popup.draw(self.window)
 
     def event(self, e) -> None:
         if e.type == pygame.QUIT:
@@ -38,6 +52,9 @@ class Game:
 
         if self.in_menu:
             self.menu.event(e)
+
+        if self.is_popup_open:
+            self.popup.event(e)
 
         elif e.type == pygame.KEYDOWN:
             self.player.move(e.key)

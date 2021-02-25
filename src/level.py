@@ -26,6 +26,20 @@ class Level:
 
         return self.cfg.maze[j][i]
 
+    def update_block(self, x, y, new):
+        bs = self.cfg.block_size
+        j, i = int(y / bs), int(x / bs)
+
+        if j >= len(self.cfg.maze[0]) or i >= len(self.cfg.maze):
+            return 0
+
+        text = list(self.cfg.maze[j])
+        text[i] = new
+        self.cfg.maze[j] = "".join(text)
+        print(i, j)
+
+        return 1
+
     def draw(self, surface) -> None:
         # Draw background
         surface.fill(self.cfg.bg_color)

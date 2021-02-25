@@ -13,6 +13,14 @@ class Player:
         self.gender = gender
         self.image = self.cfg.assets["player"][gender]
 
+    def button_mine(self, data):
+        x, y = data["pos"]
+        self.game.level.update_block(x, y, " ")
+        self.game.set_popup(False)
+
+    def button_deny(self):
+        self.game.set_popup(False)
+
     def move(self, key):
         keys_to_pos = {
             K_LEFT: (-1, 0),
@@ -31,6 +39,34 @@ class Player:
 
         # We bumped into a wall
         if block in ["x"]:
+            return
+
+        # We bumped into a dirt
+        if block in ["d"]:
+            self.game.set_popup(
+                True,
+                which="dirt",
+                title="Do you wish to mine the dirt?",
+                buttons=[
+                    {"label": "Mine it!", "function": self.button_mine,},
+                    {"label": "Leave it!", "function": self.button_deny},
+                ],
+                pos=(x, y),
+            )
+            return
+
+        # We bumped into a rock
+        if block in ["r"]:
+            self.game.set_popup(
+                True,
+                which="rock",
+                title="Do you wish to mine the rock?",
+                buttons=[
+                    {"label": "Mine it!", "function": self.button_mine,},
+                    {"label": "Leave it!", "function": self.button_deny},
+                ],
+                pos=(x, y),
+            )
             return
 
         self.pos = (x, y)
